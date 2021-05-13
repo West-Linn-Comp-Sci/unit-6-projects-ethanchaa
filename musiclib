@@ -1,0 +1,136 @@
+//Program by ethan cha Apr 30th
+/*this program keeps track of a music library on run
+note: pretty much just make a class then recreate
+all functions of a linked list lol*/
+ 
+import java.util.Scanner;
+ 
+class Album {//album class (holds all information an album could have)
+ private String albumName;
+ private String artist;
+ private String[] trackNames;
+ private double playTime;
+ public Album (String albumName, String artist, String[] trackNames, double playTime){
+   this.albumName = albumName;
+   this.artist = artist;
+   this.trackNames = trackNames;
+   this.playTime = playTime;
+ }
+ 
+ public String getAlbumName(){
+   return albumName;
+ }
+  public String getArtist (){
+   return artist;
+ }
+ 
+ public String[] getTrackNames (){
+   return trackNames;
+ }
+ 
+ public double getPlayTime(){
+   return playTime;
+ }
+ 
+ public String getSummary (){
+   return "Album name: "+albumName+", Artist: "+artist+", Track names: "+arrToString(trackNames, ' ')+ ", Play time: "+playTime;
+ }
+ 
+ private String arrToString (String[] arrIn, char delimit){
+   String returnString = "";
+   for (String piece : arrIn){
+     if (delimit!='!')
+       returnString+=piece+=delimit;
+   }
+   return returnString;
+ }
+}
+class Main {//start
+//increase the size of the album array
+public static Album[] increaseLibSize (Album[] oldArr, int currentSize, int increase){
+  Album[] newAlbumArray = new Album[currentSize+increase];
+ 
+ 
+  for (int i = 0; i<oldArr.length; i++){
+    newAlbumArray[i]=oldArr[i];
+  }
+ 
+  return newAlbumArray;
+}
+//remove an album from the list
+public static Album[] removeEntry (Album[] oldArr, String name){
+  Album[] outArr = new Album[oldArr.length];
+  int debuff = 0;
+  for (int i = 0; i<oldArr.length; i++){
+    if (oldArr[i+debuff]==null)break;
+    if (oldArr[i].getAlbumName().equals(name)){
+      debuff++;
+      System.out.println("Removed album: "+oldArr[i].getAlbumName());
+    }
+    outArr[i] = oldArr[i+debuff];
+  }
+  return outArr;
+}
+public static void main(String[] args) {
+  int defaultLibSize = 10;
+  int writeAt = 0;
+  //Options: add album, remove album, read out all album information
+  boolean repeat = true;
+  Album[] library = new Album[defaultLibSize];//make a new album array
+  while (repeat){
+    Scanner scanObj = new Scanner(System.in);
+   System.out.println("What would you like to do? (add album, remove album, read info, exit");
+   String input = scanObj.nextLine().toLowerCase();
+ 
+   switch (input){//choices
+     case "add album":
+       if (writeAt>= library.length){
+         System.out.println("Library max size reached, adding more space to library.");
+         library = increaseLibSize(library, library.length, 10);
+       }
+       System.out.println("Enter the album name:");
+       String albumName=scanObj.nextLine();
+       System.out.println("Enter the artist name:");
+       String artist=scanObj.nextLine();
+       //TRACK ENTERIES
+       System.out.println("Enter how many tracks there are:");
+       int tracks = Integer.parseInt(scanObj.nextLine());
+       String[] trackNames= new String[tracks];
+       for (int i =0; i<tracks; i++){
+         System.out.println("Enter the name of the "+(i+1)+" track:");
+         trackNames[i]="-"+scanObj.nextLine();
+       }
+       System.out.println("Enter the total play time of the album:");
+       double playTime=Double.parseDouble(scanObj.nextLine());
+       library[writeAt]=new Album(albumName, artist, trackNames, playTime);
+       System.out.println("Added a new album to the library");
+       writeAt++;
+       break;
+     case "remove album":
+       System.out.println("Enter the name of the album you would like to remove:");
+       String tobe = scanObj.nextLine();
+       library = removeEntry(library,tobe);
+       writeAt = (writeAt>0 ?writeAt-1: 0);
+       break;
+     case "read info":
+       System.out.println("----Library----");
+       boolean empty = true;
+       for (Album album : library){
+         if (album!=null){
+           System.out.println(album.getSummary());
+           empty = false;
+         }
+       }
+       if (empty) System.out.println("Library is empty");
+       System.out.println("-------");
+       break;
+     case "exit":
+       repeat= false;
+       break;
+     default :
+       System.out.println("Did not understand..");
+       break;
+   }
+  }
+}
+}
