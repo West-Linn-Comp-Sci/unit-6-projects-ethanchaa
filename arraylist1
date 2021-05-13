@@ -1,0 +1,51 @@
+//Ethan Cha
+//AP CS A: Unit 6 ArrayLists – Coding Assignment #5
+ 
+//1. Write a method named removeZeros that is passed an ArrayList parameter named list. The method must remove all values of 0.
+import java.util.ArrayList;
+ 
+class Main {
+ public static void main(String[] args) {
+   System.out.println("Hello world!");
+ }
+ 
+ public static void removeZeros(ArrayList<Integer> list){
+   for (Integer x : list){
+     if (x == 0) list.remove(x);
+   }
+ }
+ 
+ public int countLetters(ArrayList<String> list) {
+   int len = 0;
+   for (String t : list){
+     len+=t.length();
+   }
+   return len;
+ }
+ 
+ public int findPosition (ArrayList<Integer> list, int keyValue){
+   for (int i = 0; i<list.size(); i++){
+     if (list.get(i)==keyValue) return i;
+   }
+   return -1;
+ }
+ 
+ public ArrayList<String> parseIntoArrayList (String input){/*returning type String is dumb because output can only be character but i digress*/
+   ArrayList<String> out = new ArrayList<String>();
+   for (int i = 0; i<input.length(); i++){
+     out.add(String.valueOf(input.charAt(i)));
+   }
+   return out;
+ }
+ 
+ public String findMin (ArrayList<Person> list){
+   int low = Integer.MAX_VALUE;
+   String name = "";
+   for (Person pers : list){
+     if (pers.getAge < low){
+       name = pers.getName;
+     }
+   }
+   return name;
+ }
+}
