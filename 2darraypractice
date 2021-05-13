@@ -1,0 +1,75 @@
+import java.util.ArrayList;
+class Main {
+ public static void main(String[] args)
+ {
+   int[][] thing = new int[][] {{1,2,3,4,5},{1,2,2,4,5},{1,2,3,6,5}}
+   System.out.println(minRow(thing));
+   System.out.println(colMaxs(thing));
+   System.out.println(allRowSums(thing));
+   System.out.println(averageCol(thing));
+   System.out.println(smallEven(thing));
+   System.out.println(biggestRow(thing));
+ }
+}
+ 
+class Array2DExplorer{
+ public int minRow (int[][] nums, int rowIndex){
+   int min = Integer.MAX_VALUE;
+   for (int i = 0; i<num[rowIndex].length; i++){
+     if (num[rowIndex][i]<min) min = num[rowIndex][i];
+   }
+   return min;
+ }
+ 
+ public int[] colMaxs(int[][] matrix){
+   int[] max = new int[matrix.length];
+   for (int i = 0; i<matrix.length; i++){
+     max[i] = Integer.MIN_VALUE;
+     for (int j = 0; j<matrix[i].length; j++){
+       if (max[i]<matrix[i][j]) max[i] = matrix[i][j];
+     }
+   }
+   return max;
+ }
+ 
+ public int[] allRowSums(int[][] data){
+   int[] sums = new int[data.length];
+   for (int i = 0; i<data.length; i++){
+     for (int j = 0; j<data[i].length; j++){
+       sums[i] += data[i][j];
+     }
+   }
+   return sums;
+ }
+ 
+  public double[] averageCol(int[][] data){
+   double[] avg = new double[data.length];
+   for (int i = 0; i<data.length; i++){
+     for (int j = 0; j<data[i].length; j++){
+       avg[i] += data[i][j];
+     }
+     avg[i] = avg[i]/data[i].length;
+   }
+   return avg;
+ }
+ 
+ public int smallEven(int[][] matrix){
+   int[] res = new int[matrix.length];
+   for (int i = 0; i<matrix.length; i++){
+     res[i] = Integer.MAX_VALUE;
+     for (int j = 0; j<matrix[i].length; j++){
+       if (res[i]>matrix[i][j] && matrix[i][j] % 2 == 0) res[i] = matrix[i][j];
+     }
+   }
+ }
+ 
+ public static int biggestRow(int[][] nums){
+   int[] sums = allRowSums(nums);
+   int biggest = 0;
+   for (int i = 0; i<nums.length; i++){
+     if (sums[biggest]<sums[i]){
+       biggest = i;
+     }
+   }
+ }
+}
